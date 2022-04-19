@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router'
 import { initializeApp } from 'firebase/app'
 import { getAuth } from 'firebase/auth'
+import { getDatabase } from 'firebase/database'
 import './index.css'
 import store from './store/index'
 import MyButton from './components/UI/MyButton.vue'
@@ -19,6 +20,7 @@ const firebaseConfig = {
 
 const firebase = initializeApp(firebaseConfig)
 const auth = getAuth(firebase)
+const database = getDatabase(firebase)
 
 const app = createApp(App)
 

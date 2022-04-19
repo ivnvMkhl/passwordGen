@@ -94,5 +94,8 @@ export default {
     getUserEmail(state) {
       return state.user.email
     },
+    getUID(state) {
+      return state.user.uid
+    },
   },
 }

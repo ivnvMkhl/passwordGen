@@ -76,14 +76,16 @@ export default {
       },
     }
   },
-  computed: { ...mapGetters(['getService', 'getLogin', 'getPassword', 'getAllCreate', 'isAuth', 'getUserEmail']) },
+  computed: { ...mapGetters(['getService', 'getLogin', 'getPassword', 'getAllCreate', 'isAuth', 'getUserEmail', 'getUID']) },
   methods: {
     ...mapActions(['createItem', 'changeService', 'changeLogin', 'changePassword', 'clearCreate', 'logOut', 'getUserAuth']),
     buildCreate() {
-      let create = this.getAllCreate
-      create.password = CryptoJS.AES.encrypt(create.password, `${create.login}_secret`).toString()
-      this.createItem(create)
+      let item = this.getAllCreate
+      item.password = CryptoJS.AES.encrypt(item.password, `${item.login}_secret`).toString()
+      const uid = this.getUID
+      this.createItem({ item, uid })
       this.clearCreate()
+      this.$refs.create_service.focus()
     },
   },
 }
