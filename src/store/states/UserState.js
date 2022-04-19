@@ -15,7 +15,6 @@ export default {
       const auth = getAuth()
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-          console.log(userCredential.user)
           //sendEmailVerification(auth.currentUser)
           ctx.commit('updateAndLoginUser', userCredential.user)
           router.replace({ name: 'create' })
@@ -28,7 +27,6 @@ export default {
       const auth = getAuth()
       signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-          console.log(userCredential.user)
           ctx.commit('updateAndLoginUser', userCredential.user)
           router.replace({ name: 'create' })
         })
@@ -40,7 +38,6 @@ export default {
       const auth = getAuth()
       sendPasswordResetEmail(auth, email)
         .then(() => {
-          console.log('send forgot pass email')
           router.replace({ name: 'login' })
         })
         .catch((err) => {
@@ -60,7 +57,6 @@ export default {
     },
     async getUserAuth(ctx) {
       const auth = getAuth()
-
       onAuthStateChanged(auth, (user) => {
         if (user) {
           ctx.commit('updateAndLoginUser', user)

@@ -10,15 +10,36 @@
     <div>
       <div>Service:</div>
       <div>
-        <input type="text" class="mb-2 px-2 w-52" @input="changeService($event.target.value)" :value="getService" />
+        <input
+          type="text"
+          class="mb-2 px-2 w-52"
+          ref="create_service"
+          v-on:keyup.enter="this.$refs.create_login.focus()"
+          @input="changeService($event.target.value)"
+          :value="getService"
+        />
       </div>
       <div>Login:</div>
       <div>
-        <input type="text" class="mb-2 px-2 w-52" @input="changeLogin($event.target.value)" :value="getLogin" />
+        <input
+          type="text"
+          class="mb-2 px-2 w-52"
+          ref="create_login"
+          v-on:keyup.enter="this.$refs.create_password.focus()"
+          @input="changeLogin($event.target.value)"
+          :value="getLogin"
+        />
       </div>
       <div>Password:</div>
       <div>
-        <input type="text" class="mb-2 px-2 w-52" @input="changePassword($event.target.value)" :value="getPassword" />
+        <input
+          type="text"
+          class="mb-2 px-2 w-52"
+          ref="create_password"
+          v-on:keyup.enter="buildCreate()"
+          @input="changePassword($event.target.value)"
+          :value="getPassword"
+        />
       </div>
       <div class="mt-2">
         <MyButton @click="buildCreate()"> Create </MyButton>
@@ -42,6 +63,9 @@ export default {
     if (!this.isAuth) {
       this.$router.push({ name: 'gen' })
     }
+  },
+  mounted() {
+    this.$refs.create_service.focus()
   },
   data() {
     return {

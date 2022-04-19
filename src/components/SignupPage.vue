@@ -3,11 +3,18 @@
     <div class="text-2xl mb-4">Sign Up</div>
     <div class="">
       <div class="">Email:</div>
-      <input type="email" class="mb-2 px-2 w-52" v-model="email" />
+      <input type="email" class="mb-2 px-2 w-52" ref="signup_email" v-on:keyup.enter="this.$refs.signup_password.focus()" v-model="email" />
     </div>
     <div class="">
       <div class="">Password:</div>
-      <input type="text" class="mb-2 px-2 w-52" :class="{ 'text-red-500': !validPassword() }" v-model="password" />
+      <input
+        type="text"
+        class="mb-2 px-2 w-52"
+        ref="signup_password"
+        v-on:keyup.enter="signUp({ password, email })"
+        :class="{ 'text-red-500': !validPassword() }"
+        v-model="password"
+      />
     </div>
     <div class="">
       <MyButton @click="signUp({ password, email })">Sign Up</MyButton>
@@ -30,6 +37,9 @@
 <script>
 import { mapActions } from 'vuex'
 export default {
+  mounted() {
+    this.$refs.signup_email.focus()
+  },
   data() {
     return {
       email: '',

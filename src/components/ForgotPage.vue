@@ -3,7 +3,7 @@
     <div class="text-2xl mb-4">Forgot password</div>
     <div class="">
       <div class="">Email:</div>
-      <input type="email" class="mb-2 px-2 w-52" v-model="email" />
+      <input type="email" ref="forgot_email" class="mb-2 px-2 w-52" v-on:keyup.enter="forgotPass(email)" v-model="email" />
     </div>
     <div class="">
       <MyButton @click="forgotPass(email)">Send forgot email</MyButton>
@@ -22,6 +22,9 @@
 <script>
 import { mapMutations, mapActions } from 'vuex'
 export default {
+  mounted() {
+    this.$refs.forgot_email.focus()
+  },
   data() {
     return {
       email: '',
