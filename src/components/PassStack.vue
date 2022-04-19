@@ -14,9 +14,14 @@
 
 <script>
 import PassStackItem from './PassStackItem.vue'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 export default {
   created() {
+    const isAuth = this.getUserAuth()
+    if (!isAuth) {
+      console.log('not auth')
+      this.$router.push({ name: 'gen' })
+    }
     if (!this.isAuth) {
       this.$router.push({ name: 'gen' })
     }
@@ -24,6 +29,7 @@ export default {
   components: {
     PassStackItem,
   },
-  computed: mapGetters(['getAll', 'isAuth']),
+  computed: { ...mapGetters(['getAll', 'isAuth']) },
+  methods: { ...mapActions(['getUserAuth']) },
 }
 </script>

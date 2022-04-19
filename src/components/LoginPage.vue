@@ -3,14 +3,14 @@
     <div class="text-2xl mb-4">Sign In</div>
     <div class="">
       <div class="">Email:</div>
-      <input type="email" class="mb-2 px-2 w-52" />
+      <input type="email" class="mb-2 px-2 w-52" v-model="email" />
     </div>
     <div>
       <div>Password:</div>
-      <input type="password" class="mb-2 px-2 w-52" />
+      <input type="password" class="mb-2 px-2 w-52" :class="{ 'text-red-500': !validPassword() }" v-model="password" />
     </div>
     <div class="">
-      <MyButton>Sign In</MyButton>
+      <MyButton @click="logIn({ email, password })">Sign In</MyButton>
     </div>
     <div class="mt-4">
       New user?
@@ -30,8 +30,22 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapMutations, mapActions } from 'vuex'
 export default {
-  methods: { ...mapMutations(['enterTest']) },
+  data() {
+    return {
+      email: '',
+      password: '',
+    }
+  },
+  methods: {
+    ...mapMutations(['enterTest']),
+    ...mapActions(['logIn']),
+    validPassword() {
+      if (this.password.length >= 6) {
+        return true
+      } else return false
+    },
+  },
 }
 </script>

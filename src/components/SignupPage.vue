@@ -7,10 +7,10 @@
     </div>
     <div class="">
       <div class="">Password:</div>
-      <input type="password" class="mb-2 px-2 w-52" :class="{ 'text-red-500': !validPassword() }" v-model="password" />
+      <input type="text" class="mb-2 px-2 w-52" :class="{ 'text-red-500': !validPassword() }" v-model="password" />
     </div>
     <div class="">
-      <MyButton>Sign Up</MyButton>
+      <MyButton @click="signUp({ password, email })">Sign Up</MyButton>
     </div>
     <div class="mt-4">
       Already have an account?
@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
   data() {
     return {
@@ -36,8 +37,9 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['signUp']),
     validPassword() {
-      if (this.password.length > 6) {
+      if (this.password.length >= 6) {
         return true
       } else return false
     },

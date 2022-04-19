@@ -4,17 +4,7 @@
       Logged in <strong>{{ getUserEmail }}</strong>
     </div>
     <div class="mb-8">
-      <button
-        class="font-bold hover:text-slate-600 hover:cursor-pointer"
-        @click="
-          () => {
-            logout()
-            $router.push('/')
-          }
-        "
-      >
-        Logout
-      </button>
+      <button class="font-bold hover:text-slate-600 hover:cursor-pointer" @click="logOut()">Logout</button>
     </div>
     <div class="text-2xl mb-4">Create new entry</div>
     <div>
@@ -44,6 +34,11 @@ import CryptoJS from 'crypto-js'
 
 export default {
   created() {
+    const isAuth = this.getUserAuth()
+    if (!isAuth) {
+      console.log('not auth')
+      this.$router.push({ name: 'gen' })
+    }
     if (!this.isAuth) {
       this.$router.push({ name: 'gen' })
     }
@@ -59,8 +54,7 @@ export default {
   },
   computed: { ...mapGetters(['getService', 'getLogin', 'getPassword', 'getAllCreate', 'isAuth', 'getUserEmail']) },
   methods: {
-    ...mapActions(['createItem', 'changeService', 'changeLogin', 'changePassword', 'clearCreate']),
-    ...mapMutations(['logout']),
+    ...mapActions(['createItem', 'changeService', 'changeLogin', 'changePassword', 'clearCreate', 'logOut', 'getUserAuth']),
     buildCreate() {
       let create = this.getAllCreate
       create.password = CryptoJS.AES.encrypt(create.password, `${create.login}_secret`).toString()
