@@ -3,10 +3,24 @@
     <div class="text-2xl mb-4">Forgot password</div>
     <div class="">
       <div class="">Email:</div>
-      <input type="email" ref="forgot_email" class="mb-2 px-2 w-52" v-on:keyup.enter="forgotPass(email)" v-model="email" />
+      <input
+        type="email"
+        ref="forgot_email"
+        :class="{ 'bg-red-200': !/^[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}$/i.test(email) && !(email.length === 0) }"
+        class="mb-2 px-2 w-52"
+        v-on:keyup.enter="forgotPass(email)"
+        v-model="email"
+      />
     </div>
     <div class="">
-      <MyButton @click="forgotPass(email)">Send forgot email</MyButton>
+      <MyButton
+        :class="{
+          'border-2 border-red-200 hover:border-red-200 bg-slate-300 hover:bg-slate-300 active:bg-slate-300':
+            !/^[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}$/i.test(email),
+        }"
+        @click=";/^[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}$/i.test(email) ? forgotPass(email) : () => {}"
+        >Send forgot email</MyButton
+      >
     </div>
     <div class="mt-4">
       New user?

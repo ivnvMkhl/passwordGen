@@ -15,7 +15,6 @@ export default {
     },
     async fetchItems(ctx, uid) {
       const dbRef = ref(getDatabase())
-      console.log(uid)
       get(child(dbRef, `${uid}`))
         .then((snapshot) => {
           if (snapshot.exists()) {

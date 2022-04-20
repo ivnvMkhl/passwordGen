@@ -3,7 +3,14 @@
     <div class="text-2xl mb-4">Sign In</div>
     <div class="">
       <div class="">Email:</div>
-      <input type="email" ref="login_email" v-on:keyup.enter="this.$refs.login_password.focus()" class="mb-2 px-2 w-52" v-model="email" />
+      <input
+        type="email"
+        :class="{ 'bg-red-200': !/^[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}$/i.test(email) && !(email.length === 0) }"
+        ref="login_email"
+        v-on:keyup.enter="this.$refs.login_password.focus()"
+        class="mb-2 px-2 w-52"
+        v-model="email"
+      />
     </div>
     <div>
       <div>Password:</div>
@@ -12,12 +19,19 @@
         ref="login_password"
         class="mb-2 px-2 w-52"
         v-on:keyup.enter="logIn({ email, password })"
-        :class="{ 'text-red-500': !validPassword() }"
+        :class="{ 'bg-red-200': !(password.length > 5) && !(password.length === 0) }"
         v-model="password"
       />
     </div>
     <div class="">
-      <MyButton @click="logIn({ email, password })">Sign In</MyButton>
+      <MyButton
+        :class="{
+          'border-2 border-red-200 hover:border-red-200 bg-slate-300 hover:bg-slate-300 active:bg-slate-300':
+            !(password.length > 5) || !/^[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}$/i.test(email),
+        }"
+        @click="password.length > 5 && /^[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}$/i.test(email) ? logIn({ password, email }) : () => {}"
+        >Sign In</MyButton
+      >
     </div>
     <div class="mt-4">
       New user?
@@ -62,11 +76,6 @@ export default {
   methods: {
     ...mapMutations(['enterTest']),
     ...mapActions(['logIn', 'getUserAuth']),
-    validPassword() {
-      if (this.password.length >= 6) {
-        return true
-      } else return false
-    },
   },
 }
 </script>
