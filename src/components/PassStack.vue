@@ -9,6 +9,9 @@
       <PassStackItem v-for="item in getAll" :key="item.id" :item="item"></PassStackItem>
     </div>
     <div v-else class="py-4 text-lg">No entries</div>
+    <div>
+      <MyButton @click="fetchItems(getUID)">Refresh server</MyButton>
+    </div>
   </div>
 </template>
 
@@ -17,19 +20,18 @@ import PassStackItem from './PassStackItem.vue'
 import { mapGetters, mapActions } from 'vuex'
 export default {
   created() {
-    const isAuth = this.getUserAuth()
-    if (!isAuth) {
-      console.log('not auth')
-      this.$router.push({ name: 'gen' })
-    }
+    this.getUserAuth()
     if (!this.isAuth) {
-      this.$router.push({ name: 'gen' })
+      this.$router.push('/')
     }
+  },
+  mounted() {
+    this.fetchItems(this.getUID)
   },
   components: {
     PassStackItem,
   },
-  computed: { ...mapGetters(['getAll', 'isAuth']) },
-  methods: { ...mapActions(['getUserAuth']) },
+  computed: { ...mapGetters(['getAll', 'isAuth', 'getUID']) },
+  methods: { ...mapActions(['getUserAuth', 'fetchItems']) },
 }
 </script>

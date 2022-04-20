@@ -56,7 +56,7 @@ export default {
         })
     },
     async getUserAuth(ctx) {
-      const auth = getAuth()
+      const auth = await getAuth()
       onAuthStateChanged(auth, (user) => {
         if (user) {
           ctx.commit('updateAndLoginUser', user)

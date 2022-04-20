@@ -35,8 +35,11 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 export default {
+  created() {
+    this.getUserAuth()
+  },
   mounted() {
     this.$refs.signup_email.focus()
   },
@@ -46,8 +49,16 @@ export default {
       password: '',
     }
   },
+  watch: {
+    isAuth() {
+      if (this.isAuth) {
+        this.$router.push('/')
+      }
+    },
+  },
+  computed: { ...mapGetters(['isAuth']) },
   methods: {
-    ...mapActions(['signUp']),
+    ...mapActions(['signUp', 'getUserAuth']),
     validPassword() {
       if (this.password.length >= 6) {
         return true

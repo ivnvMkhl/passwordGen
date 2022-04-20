@@ -37,7 +37,11 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
 export default {
+  created() {
+    this.getUserAuth()
+  },
   data() {
     return {
       generateParams: {
@@ -55,7 +59,9 @@ export default {
       generatedPass: 'PaSsW0Rd',
     }
   },
+  computed: mapGetters(['getUID', 'isAuth']),
   methods: {
+    ...mapActions(['getUserAuth', 'fetchItems']),
     generatePass() {
       let summMap = this.charMaps.lowercaseMap
       if (this.generateParams.numbers) summMap = [...summMap, ...this.charMaps.numberMap]

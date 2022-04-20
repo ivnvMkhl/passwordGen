@@ -37,8 +37,11 @@
 </template>
 
 <script>
-import { mapMutations, mapActions } from 'vuex'
+import { mapMutations, mapActions, mapGetters } from 'vuex'
 export default {
+  created() {
+    this.getUserAuth()
+  },
   mounted() {
     this.$refs.login_email.focus()
   },
@@ -48,9 +51,17 @@ export default {
       password: '',
     }
   },
+  watch: {
+    isAuth() {
+      if (this.isAuth) {
+        this.$router.push('/')
+      }
+    },
+  },
+  computed: { ...mapGetters(['isAuth']) },
   methods: {
     ...mapMutations(['enterTest']),
-    ...mapActions(['logIn']),
+    ...mapActions(['logIn', 'getUserAuth']),
     validPassword() {
       if (this.password.length >= 6) {
         return true

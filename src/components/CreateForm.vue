@@ -55,13 +55,9 @@ import CryptoJS from 'crypto-js'
 
 export default {
   created() {
-    const isAuth = this.getUserAuth()
-    if (!isAuth) {
-      console.log('not auth')
-      this.$router.push({ name: 'gen' })
-    }
+    this.getUserAuth()
     if (!this.isAuth) {
-      this.$router.push({ name: 'gen' })
+      this.$router.push('/')
     }
   },
   mounted() {

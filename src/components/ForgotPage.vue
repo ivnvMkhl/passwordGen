@@ -20,8 +20,11 @@
 </template>
 
 <script>
-import { mapMutations, mapActions } from 'vuex'
+import { mapMutations, mapActions, mapGetters } from 'vuex'
 export default {
+  created() {
+    this.getUserAuth()
+  },
   mounted() {
     this.$refs.forgot_email.focus()
   },
@@ -30,6 +33,17 @@ export default {
       email: '',
     }
   },
-  methods: { ...mapMutations(['enterTest']), ...mapActions(['forgotPass']) },
+  watch: {
+    isAuth() {
+      if (this.isAuth) {
+        this.$router.push('/')
+      }
+    },
+  },
+  computed: { ...mapGetters(['isAuth']) },
+  methods: {
+    ...mapMutations(['enterTest']),
+    ...mapActions(['forgotPass', 'getUserAuth']),
+  },
 }
 </script>
